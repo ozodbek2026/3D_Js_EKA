@@ -2,6 +2,8 @@ const DEG = Math.PI / 180;
 var myContainer = document.getElementById("container");
 var myWorld = document.getElementById("world");
 
+var lock;
+
 var lvl_one_map = [
     { name: "floor", height: 2000, width: 2000, posX: 0, posY: 100, posZ: 0, rotX: 90, rotY: 0, rotZ: 0, color: "violet", opacity: 0.5},
     { name: "ceiling", height: 2000, width: 2000, posX: 0, posY: -100, posZ: 0, rotX: 90, rotY: 0, rotZ: 0, color: "green", opacity: 0.5 },
@@ -91,10 +93,17 @@ document.addEventListener("mousemove", (e) => {
     mouseY = e.movementY;
 });
 
+document.addEventListener("pointerlockchange", (event) => {
+    lock = !lock;
+});
+
 myContainer.addEventListener("click", async () => {
-  await myContainer.requestPointerLock({
-    unadjustedMovement: true,
-  });
+    if (!lock) {
+        await myContainer.requestPointerLock({
+            unadjustedMovement: true,
+        });
+    } 
+        
 //   myContainer.style.width = "1920px";
 //   myContainer.style.height = "1200px";
 //   myContainer.requestFullscreen();
@@ -116,8 +125,11 @@ function update() {
 
     pawn.z += dz;
     pawn.x += dx;
-    pawn.ry += dry;
-    pawn.rx -= drx;
+
+    if (lock) {
+        pawn.ry += dry;
+        pawn.rx -= drx;
+    }
 
     myWorld.style.transform = `translateZ(600px) RotateX(${pawn.rx}deg) RotateY(${pawn.ry}deg) translate3d(${-pawn.x}px, ${pawn.y}px, ${pawn.z}px) `;
 }
