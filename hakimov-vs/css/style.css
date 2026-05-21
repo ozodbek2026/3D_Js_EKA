@@ -1,11 +1,10 @@
 #container {
     position: absolute;
-    height: 800px;
-    width: 1200px;
+    height: 700px;
+    width: 1100px;
     border: 2px solid #000;
     overflow: hidden;
-    perspective: 600px;
-    cursor: none;
+    perspective: 550px;
 }
 
 #world {
@@ -17,11 +16,12 @@
 
 #pawn { 
     position: absolute;
-    top: 400px;
-    left: 600px;
+    top: 350px;
+    left: 550px;
     height: 20px;
     width: 20px;
     border-radius: 20px;
     background-color: blueviolet;
     transform: translate(-50%, -50%);
+    z-index: 1000 !important;
 }
