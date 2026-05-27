@@ -38,6 +38,9 @@ function createWorld(map) {
 createWorld(lvl_one_map);   
 
 let dx = dy = dz = dry = 0;
+let onGround = false;
+let gravity = 1;
+let jumpPower = -18;
 let pressUp = pressDown = pressLeft = pressRight = 0;
 let mouseX = mouseY = 0;
 let vel = 10;
@@ -57,6 +60,9 @@ function player(x, y, z, rx, ry, rz, vx, vy, vz) {
 let pawn = new player(0, 0, 0, 0, 0, 0, vel, vel, vel);
 
 document.addEventListener("keydown", (e) => {
+    if (e.code == "Space" && onGround) {
+    dy = jumpPower;
+}
     if (e.code == "KeyW") {
         pressUp = pawn.vz;
     }
@@ -111,11 +117,13 @@ function update() {
     dry = mouseX;
     drx = 0;
     mouseX = mouseY = 0;
+    dy += gravity;
 
     collision(lvl_one_map, pawn);
 
     pawn.z += dz;
     pawn.x += dx;
+    pawn.y += dy;
     pawn.ry += dry;
     pawn.rx -= drx;
 
