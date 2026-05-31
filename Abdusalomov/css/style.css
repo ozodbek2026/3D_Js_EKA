@@ -7,25 +7,24 @@ body {
 }
 
 #container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 800px;
-    width: 1200px;
-    border: 3px solid rgba(255,255,255,0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
-    perspective: 900px;
+    perspective: 600px;
+    perspective-origin: 50% 50%;
     background: rgba(0,0,0,0.25);
-    box-shadow: 0 0 40px rgba(0,0,0,0.7);
 }
 
 #world {
     position: absolute;
-    height: inherit;
-    width: inherit;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     transform-style: preserve-3d;
-    transform-origin: center center;
 }
 
 #world > div {
@@ -35,6 +34,41 @@ body {
 
 #pawn {
     display: none;
+}
+
+#crosshair {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+}
+
+#crosshair::before,
+#crosshair::after {
+    content: "";
+    position: absolute;
+    background: rgba(245,245,245,0.9);
+    border-radius: 999px;
+}
+
+#crosshair::before {
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+#crosshair::after {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
 }
 
 ::selection {
